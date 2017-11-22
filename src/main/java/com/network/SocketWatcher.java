@@ -34,7 +34,9 @@ public class SocketWatcher implements Runnable{
 				e.printStackTrace();
 			 } catch (InterruptedException e) {
 				e.printStackTrace();
-			}		    
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 			 }
 	}
 
