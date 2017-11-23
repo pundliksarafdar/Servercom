@@ -30,12 +30,10 @@ public class NotifierThread {
 		synchronized (uartUtils) {
 			while(true){
 				try {
-					logger.info("Waiting.......");
 					uartUtils.wait();
-					logger.info("Out of waiting........");
 					printMessage(uartUtils.message,uartUtils.uartEventTime,uartUtils.gpioState,uartUtils.gpioEventTime);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					logger.error(e.getStackTrace());
 				}
 		}
 		}
@@ -48,6 +46,7 @@ public class NotifierThread {
 	
 	public static void main(String[] args) {
 		NotifierThread notifierThread = new NotifierThread();
+		try{
 		notifierThread.logger.info("Validating license........");
 		boolean isLicenseValid = LicenseValidator.isLicenseValid();
 		if(!isLicenseValid){
@@ -59,12 +58,15 @@ public class NotifierThread {
 				notifierThread.logger.error("Exiting application.....");
 				return;
 			} catch (IOException e) {
-				e.printStackTrace();
+				notifierThread.logger.error(e.getStackTrace());
 			}
 		}else{
 			notifierThread.logger.info("License matched moving to next step....");
 		}
 		notifierThread.logger.info("Starting server........");
 		notifierThread.init();
+	}catch(Exception e){
+		notifierThread.logger.error(e.getStackTrace());
+	}
 	}
 }

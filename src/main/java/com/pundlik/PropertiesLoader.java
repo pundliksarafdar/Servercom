@@ -23,9 +23,9 @@ public class PropertiesLoader {
 			prop.load(serverComProp);
 			logger.info(prop);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 				
 	}

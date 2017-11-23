@@ -20,7 +20,7 @@ import com.pundlik.PropertiesLoader;
 import com.utils.SystemInfoUtils;
 
 public class LicenseValidator {
-	private static Logger logger = Logger.getLogger(PropertiesLoader.class);
+	private static Logger logger = Logger.getLogger(LicenseValidator.class);
 	
 	private static byte[] getFileBytes(String filePath) throws IOException, ClassNotFoundException{
 		FileInputStream fis = new FileInputStream(filePath);
@@ -39,15 +39,15 @@ public class LicenseValidator {
 			byte[] dataBytes = getFileBytes(filePath);
 			return new String(cipher.doFinal(dataBytes));
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (InvalidKeyException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (BadPaddingException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return null;
 	}
@@ -59,13 +59,13 @@ public class LicenseValidator {
 		try {
 			SystemInfoUtils.getSystemInfo(rasPiDetails);
 		} catch (NumberFormatException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (UnsupportedOperationException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		}
 		
 		try {
@@ -73,11 +73,11 @@ public class LicenseValidator {
 			String deviceIdFromLicense = getDeviceId("./servercom.lic");
 			isValid = systemSerialNumber.toLowerCase().equals(deviceIdFromLicense.toLowerCase());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}catch (NullPointerException  e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return isValid;
 	}

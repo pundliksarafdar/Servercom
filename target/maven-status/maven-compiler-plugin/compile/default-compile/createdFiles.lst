@@ -1,7 +1,6 @@
 com\manager\ConfigurationManager.class
 com\license\LicenseRequestGenerator.class
 com\network\SocketClient.class
-com\utils\UARTEvent$2.class
 com\pundlik\SerialExample.class
 com\test\ListenGpioExample.class
 com\bean\RasPiDetails.class
@@ -11,8 +10,6 @@ com\bean\ComData.class
 com\utils\GPIOInfoUtils.class
 com\pundlik\NotifierThread.class
 com\manager\FilesManager.class
-com\pundlik\Notifier.class
-com\network\PostMan.class
 com\network\PostManNew.class
 com\utils\UARTEvent.class
 com\network\SocketWatcher.class
@@ -22,7 +19,6 @@ com\network\HttpClient.class
 com\utils\UARTEvent$1.class
 com\test\ListenGpioExample$1.class
 com\utils\GPIOInfoUtils$1.class
-com\utils\UARTUtils.class
 com\network\HttpClient$1.class
 com\network\PostFile.class
 com\utils\SerialPortUtil$1.class

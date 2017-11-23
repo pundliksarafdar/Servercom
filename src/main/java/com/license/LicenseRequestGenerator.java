@@ -6,10 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import org.apache.log4j.Logger;
+
 import com.bean.RasPiDetails;
+import com.pundlik.NotifierThread;
 import com.utils.SystemInfoUtils;
 
 public class LicenseRequestGenerator {
+	static Logger logger = Logger.getLogger(LicenseRequestGenerator.class);
 	public static File generateLicRequestFile() throws IOException{
 		File file = new File("./licenseKeyGen.key"); 
 		if(file.exists()){
@@ -22,11 +26,11 @@ public class LicenseRequestGenerator {
 		try {
 			SystemInfoUtils.getSystemInfo(rasPiDetails);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (UnsupportedOperationException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		oos.writeChars(rasPiDetails.getName().trim());
 		oos.close();

@@ -38,23 +38,19 @@ public class PostManNew implements Runnable{
 		ComData[] comDatas = new ComData[]{comData};
 		if(null!=gpioState){
 			rasPiDetails.setGpioStatus(gpioState);
-			rasPiDetails.setComData(comDatas);
 		}
+		rasPiDetails.setComData(comDatas);
 		try {
 			SystemInfoUtils.getSystemInfo(rasPiDetails);
 			logger.info("RasPiDetails "+rasPiDetails.toString());
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (UnsupportedOperationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		
 		if(rasPiDetails.getId() != 0){
@@ -69,14 +65,13 @@ public class PostManNew implements Runnable{
 			*/
 			SocketClient socketClient = new SocketClient();
 			try {
-				logger.error("Sending data to socket....");
 				socketClient.socketSend(rasPiDetails);
 				
 				//Now moved to socketWatcher 
 				/*PostFile postFile = new PostFile();
 				postFile.runPost();*/
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getStackTrace());
 				logger.error("socket error "+e.getMessage());
 				FilesManager filesManager = new FilesManager();
 				filesManager.fileSave(rasPiDetails);

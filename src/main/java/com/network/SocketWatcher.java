@@ -23,19 +23,18 @@ public class SocketWatcher implements Runnable{
 				 Socket clientSocket = new Socket();
 				 InetAddress inetAddress = InetAddress.getByName(socketServerIp);
 				clientSocket.connect(new InetSocketAddress(inetAddress,socketServerPort),socketServerTimeout);
-				logger.info("Is connected...."+clientSocket.isConnected());
 				clientSocket.close();
 				PostFile postFile = new PostFile();
 				postFile.runPost();
-				Thread.sleep(5*1000);
+				Thread.sleep(60*1000);
 			} catch (UnknownHostException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			 } catch (InterruptedException e) {
-				e.printStackTrace();
+				 logger.error(e.getMessage());
 			} catch(Exception e){
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 			 }
 	}

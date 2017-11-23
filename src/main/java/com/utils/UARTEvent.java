@@ -56,13 +56,11 @@ public class UARTEvent{
 			config = ConfigurationManager.getSerialPortConfiguration();
 		} catch (UnsupportedBoardType e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		}
 		final Serial serial = SerialFactory.createInstance();
 		console.box("Starting conf server at port "+config.toString());
@@ -108,7 +106,7 @@ public class UARTEvent{
 					}*/
 										
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error(e.getStackTrace());
 				}
 			}
 		});
@@ -116,8 +114,7 @@ public class UARTEvent{
 		try {
 			serial.open(config);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 }

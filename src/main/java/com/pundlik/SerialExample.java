@@ -32,6 +32,7 @@ package com.pundlik;
  */
 
 
+import com.license.LicenseRequestGenerator;
 import com.pi4j.io.serial.*;
 import com.pi4j.util.CommandArgumentParser;
 import com.pi4j.util.Console;
@@ -39,13 +40,15 @@ import com.pi4j.util.Console;
 import java.io.IOException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 /**
  * This example code demonstrates how to perform serial communications using the Raspberry Pi.
  *
  * @author Robert Savage
  */
 public class SerialExample {
-
+	static Logger logger = Logger.getLogger(LicenseRequestGenerator.class);
     /**
      * This example program supports the following optional command arguments/options:
      *   "--device (device-path)"                   [DEFAULT: /dev/ttyAMA0]
@@ -97,7 +100,7 @@ public class SerialExample {
                     console.println("[HEX DATA]   " + event.getHexByteString());
                     console.println("[ASCII DATA] " + event.getAsciiString());
                 } catch (IOException e) {
-                    e.printStackTrace();
+                	logger.error(e.getStackTrace());
                 }
             }
         });
@@ -163,7 +166,7 @@ public class SerialExample {
                     serial.writeln("Third Line");
                 }
                 catch(IllegalStateException ex){
-                    ex.printStackTrace();
+                	logger.error(ex.getStackTrace());
                 }
 
                 // wait 1 second before continuing

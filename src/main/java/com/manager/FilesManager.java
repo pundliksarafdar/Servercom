@@ -29,13 +29,13 @@ public class FilesManager {
 				oStream = new ObjectOutputStream(fStream);
 				oStream.writeObject(rasPiDetails);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} finally{
 			try {
 				if(fStream!=null)fStream.close();
 				if(oStream!=null)oStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getStackTrace());
 			}				
 		}
 	}
@@ -53,17 +53,17 @@ public class FilesManager {
 				rasPiDetails = (RasPiDetails) iStream.readObject();
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}finally{
 			try {
 				if(fStream!=null)fStream.close();
 				if(iStream!=null)iStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error(e.getStackTrace());
 			}				
 		}
 		return rasPiDetails;

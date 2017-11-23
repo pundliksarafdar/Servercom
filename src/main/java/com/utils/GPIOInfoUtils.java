@@ -2,7 +2,11 @@ package com.utils;
 
 import java.util.HashMap;
 
-import com.network.PostMan;
+
+
+import org.apache.log4j.Logger;
+
+import com.license.LicenseRequestGenerator;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
@@ -11,9 +15,10 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.pundlik.Notifier;
+
 
 public class GPIOInfoUtils extends Thread{
+	static Logger logger = Logger.getLogger(LicenseRequestGenerator.class);
 	static GPIOInfoUtils gpioInfoUtils;
 	static Thread notifier;
 	private GPIOInfoUtils() {
@@ -39,7 +44,7 @@ public class GPIOInfoUtils extends Thread{
                 System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
                 HashMap<String, Boolean> gpioState = new HashMap<String, Boolean>();
                 gpioState.put(event.getPin().getName(), event.getState().equals(PinState.HIGH));
-                PostMan.postData(gpioState);
+                
             }
 
         };
@@ -62,8 +67,7 @@ public class GPIOInfoUtils extends Thread{
         try {
 			while(true)this.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 }

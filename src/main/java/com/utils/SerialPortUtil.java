@@ -3,6 +3,9 @@ package com.utils;
 import java.io.IOException;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
+import com.license.LicenseRequestGenerator;
 import com.manager.ConfigurationManager;
 import com.pi4j.io.gpio.exception.UnsupportedBoardType;
 import com.pi4j.io.serial.Baud;
@@ -18,6 +21,7 @@ import com.pi4j.io.serial.StopBits;
 import com.pi4j.util.Console;
 
 public class SerialPortUtil extends Thread{
+	static Logger logger = Logger.getLogger(SerialPortUtil.class);
 	static SerialPortUtil serialPortUtil;
 	static Thread notifier;
 	SerialConfig config = new SerialConfig();
@@ -35,11 +39,11 @@ public class SerialPortUtil extends Thread{
 		try {
 			config = ConfigurationManager.getSerialPortConfiguration();
 		} catch (UnsupportedBoardType e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+			logger.error(e1.getStackTrace());
 		}
 		 
 		 console.box("Connecting to "+config.toString());
@@ -57,7 +61,7 @@ public class SerialPortUtil extends Thread{
 	                    console.println("[ASCII DATA] " + event.getAsciiString());
 	                    //serialPortUtil.notify();
 	                } catch (IOException e) {
-	                    e.printStackTrace();
+	                	logger.error(e.getStackTrace());
 	                }
 	            }
 	        });
@@ -65,8 +69,7 @@ public class SerialPortUtil extends Thread{
 		 try {
 			serial.open(config);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 	
@@ -93,14 +96,11 @@ public class SerialPortUtil extends Thread{
 			serial.write("CURRENT TIME: " + new Date().toString());
 			Thread.sleep(5*1000);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		}
 	}

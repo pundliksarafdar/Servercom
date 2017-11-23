@@ -16,30 +16,25 @@ public class PostFile{
 	public static Boolean inProgress = false;
 	static ExecutorService executor = Executors.newFixedThreadPool(5);
 	
-	public synchronized void runPost() {
-		logger.info("In runpost");
+	public void runPost() {
 		synchronized (inProgress) {
-			logger.info("in runpost before progress check.........");
 			if(inProgress)return;
 			
 			final String dir = System.getProperty("user.dir");
 			File folder = new File(dir);
 			if(folder.exists()){
-				logger.info("IN progress value "+inProgress);
 				inProgress = true;
 				File[] dataFiles = folder.listFiles();
 				int filesLength = dataFiles.length;
 				for(int index=0;index<filesLength;index++){
-					if(dataFiles[index].getName().endsWith(".dat")){
+					if(dataFiles[index].getName().endsWith(".dat") && dataFiles[index].exists()){
 						FilesManager filesManager = new FilesManager();
 						RasPiDetails rasPiDetails = filesManager.getFileData(dataFiles[index].getAbsolutePath());
-						logger.info("sending File data........"+dataFiles[index].getName());
 						dataFiles[index].delete();
 						printMessage(rasPiDetails.getComData()[0].getText(),new Date(rasPiDetails.getComData()[0].getDate()),rasPiDetails.getGpioStatus(),new Date());
 					}
 				}
 				inProgress = false;
-				logger.info("IN progress value 2 "+inProgress);
 			}
 		}
 	}
